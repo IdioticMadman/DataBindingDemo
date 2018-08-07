@@ -2,18 +2,41 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <import type="java.util.List"/>
+
+        <import type="android.view.View"/>
+
+        <import type="com.robert.databindingdemo.Person"/>
+
+        <variable
+            name="userMap"
+            type="android.databinding.ObservableMap&lt;String,Object>"/>
+
         <variable
             name="person"
             type="com.robert.databindingdemo.Person"/>
+
+        <variable
+            name="user"
+            type="com.robert.databindingdemo.User"/>
+
+        <variable
+            name="handlers"
+            type="com.robert.databindingdemo.MainActivity.MyHandlers"/>
+
+
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         tools:context=".MainActivity">
 
         <EditText
@@ -23,11 +46,9 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="30dp"
+            android:onTextChanged="@{handlers::onTextChanged}"
             android:hint="first name"
-            android:inputType="text"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:inputType="text"/>
 
         <EditText
             android:id="@+id/et_last_name"
@@ -37,31 +58,55 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
             android:hint="last name"
-            android:inputType="text"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_first_name"/>
+            android:inputType="text"/>
 
         <TextView
             android:id="@+id/tv_first_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:text="@{person.firstName}"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_last_name"
+            android:text="@{userMap.firstName}"
             tools:text="firstName"/>
 
         <TextView
             android:id="@+id/tv_last_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{person.lastName}"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_first_name"
+            android:text="@{userMap.lastName}"
             tools:text="lastName"/>
 
-    </android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(userMap.age)}"
+            tools:text="age"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="@{user.firstName}"
+            tools:text="firstName"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.lastName}"
+            tools:text="lastName"/>
+
+        <include
+            android:id="@+id/tv_names"
+            layout="@layout/name"
+            bind:handlers="@{handlers}"
+            bind:person="@{person}"/>
+
+        <ViewStub
+            android:id="@+id/view_stub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout="@layout/icon"
+            app:layout_constraintTop_toBottomOf="@+id/tv_names"/>
+
+    </LinearLayout>
 </layout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="person"
+            type="com.robert.databindingdemo.Person"/>
+
+        <variable
+            name="handlers"
+            type="com.robert.databindingdemo.MainActivity.MyHandlers"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:showIn="@layout/activity_main">
+
+        <TextView
+            android:id="@+id/tv_first_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:onClick="@{(view)-> handlers.onClickFriend(view, person)}"
+            android:text="@{person.firstName}"
+            tools:text="firstName"/>
+
+        <TextView
+            android:id="@+id/tv_last_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{person.lastName}"
+            android:visibility="@{person.adult ? View.VISIBLE : View.GONE}"
+            tools:text="lastName"/>
+
+    </LinearLayout>
+
+</layout>
